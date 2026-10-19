@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Tek sağlayıcı modu servisi burada BİLDİRİLMEZ (misafir modu varsayılan, K12).
+         Öteki sağlayıcı kaldırılınca uygulama kendi manifestine ekler:
+         <service android:name="com.adventure.onepush.firebase.OnePushMessagingService" android:exported="false">
+             <intent-filter><action android:name="com.google.firebase.MESSAGING_EVENT"/></intent-filter>
+         </service> -->
+</manifest>

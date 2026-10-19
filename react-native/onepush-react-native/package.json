@@ -1,0 +1,14 @@
+{
+  "name": "@adventure/onepush-react-native",
+  "version": "0.1.0",
+  "description": "Ad Venture One Push - React Native bridge over the native One Push cores.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "source": "src/index.ts",
+  "files": ["src", "lib", "ios", "android", "onepush-react-native.podspec", "README.md"],
+  "scripts": { "build": "tsc -p tsconfig.json" },
+  "peerDependencies": { "react-native": ">=0.72.0" },
+  "devDependencies": { "typescript": "5.4.5" },
+  "license": "UNLICENSED",
+  "homepage": "https://one.adventuredigital.com"
+}

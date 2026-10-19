@@ -59,6 +59,14 @@ override fun onCreate(b: Bundle?) { super.onCreate(b); OnePush.handleIntent(inte
 
 Requirements: Android 8 (API 26)+. Module `android/onepush`; unit tests under `src/test` run on the JVM (`./gradlew :onepush:test`).
 
+### Firebase adapter (optional)
+
+`OnePushFirebase` connects the core to Firebase in one call after `FirebaseApp.configure()` / `OnePush.start`: it reads the FCM token, listens for refreshes, sets the Analytics app instance id (audience matching) and routes `one_push_open` to `Analytics.logEvent`. In guest mode it never touches the messaging delegate or service. iOS: separate package `ios-firebase/` (so the core stays Firebase-free). Android: module `android/onepush-firebase` (`OnePushFirebase.connect(context)`; single-provider mode via `OnePushMessagingService`, which you declare in your manifest only after removing the other provider).
+
+### Flutter and React Native
+
+Thin bridges over the native cores, same surface: `flutter/onepush_flutter` (MethodChannel) and `react-native/onepush-react-native` (NativeModule, TypeScript types). Neither depends on Firebase; pair them with `firebase_messaging` / `@react-native-firebase/messaging` as shown in their READMEs. Routing (`isOnePushMessage`) is decided in Dart/JS without crossing to native.
+
 ### Environment and test devices
 
 The SDK reports the build environment itself (`debug` / `test` / `production`): on iOS from the receipt (`sandboxReceipt` = TestFlight), on Android from the installer package. Play internal-test builds look like production on Android; mark those devices as test devices in the One panel. Campaigns in One choose a target environment, so a production audience cannot be hit from a test send by mistake.
@@ -67,7 +75,9 @@ The SDK reports the build environment itself (`debug` / `test` / `production`): 
 
 - iOS core: builds and passes 14 checks on macOS (no Xcode on the build machine yet; device tests pending).
 - Android core: compiles with AGP 8.5.2 / Kotlin 1.9.24 / Gradle 8.9 wrapper (JDK 17); 13 JUnit tests pass on the JVM (`./gradlew :onepush:testDebugUnitTest`). No device test yet.
-- Not in 0.1: Flutter / React Native bridges, Firebase adapter module (`OnePushFirebase`), server-side inbox, soft permission prompt UI (hook only), Huawei HMS (out of scope by decision K17).
+- Firebase adapters: Android compiles (AAR); iOS compiles against firebase-ios-sdk 11.15.0 (`cd ios-firebase && swift build`, resolves ~150 MB of Firebase on first run).
+- Flutter and React Native bridges: written, **not built** (no Flutter / React Native toolchain on the build machine); the Flutter channel test runs with `flutter test`.
+- Not in 0.1: server-side inbox, soft permission prompt UI (hook only), Huawei HMS (out of scope by decision K17), CocoaPods specs for the core (SPM only until the repository is public).
 
 ---
 
@@ -88,6 +98,14 @@ One Push, [Ad Venture One](https://one.adventuredigital.com) üzerinden yönetil
 
 Kurulum örnekleri yukarıdaki İngilizce bölümdedir (kod aynı). Gereksinimler: iOS 15+, Android 8 (API 26)+.
 
+### Firebase adaptörü (isteğe bağlı)
+
+`OnePushFirebase` çekirdeği tek çağrıyla Firebase'e bağlar: FCM token'ını okur, yenilemeyi dinler, Analytics uygulama örneği kimliğini ayarlar (kitle eşlemesi) ve `one_push_open` olayını `Analytics.logEvent`e yönlendirir. Misafir modunda mesaj delegesine ya da servisine dokunmaz. iOS: ayrı paket `ios-firebase/`; Android: `android/onepush-firebase` modülü (tek sağlayıcı modu `OnePushMessagingService` ile, yalnız öteki sağlayıcı kaldırılınca manifeste eklenir).
+
+### Flutter ve React Native
+
+Yerel çekirdeklerin üstünde ince köprüler, aynı yüzey: `flutter/onepush_flutter` ve `react-native/onepush-react-native`. İkisi de Firebase'e bağımlı değil; `firebase_messaging` / `@react-native-firebase/messaging` ile birlikte kullanılır. Yönlendirme kararı (`isOnePushMessage`) natife geçmeden Dart/JS'te verilir.
+
 ### Ortam ve test cihazları
 
 SDK derleme ortamını kendisi bildirir (`debug` / `test` / `production`): iOS'ta makbuzdan (`sandboxReceipt` = TestFlight), Android'de yükleyici paketinden. Android'de Play dahili test sürümü mağaza sürümünden ayırt edilemez; o cihazlar One panelinde test cihazı olarak adlandırılır. Kampanyalar One'da hedef ortam seçer; test gönderimi yanlışlıkla üretim kitlesine gidemez.
@@ -96,4 +114,6 @@ SDK derleme ortamını kendisi bildirir (`debug` / `test` / `production`): iOS't
 
 - iOS çekirdeği: macOS'ta derleniyor, 14 doğrulama yeşil (derleme makinesinde Xcode yok; cihaz testleri bekliyor).
 - Android çekirdeği: AGP 8.5.2 / Kotlin 1.9.24 / Gradle 8.9 sarmalayıcı (JDK 17) ile derleniyor; 13 JUnit testi JVM'de yeşil (`./gradlew :onepush:testDebugUnitTest`). Cihaz testi henüz yok.
-- 0.1'de yok: Flutter / React Native köprüleri, Firebase adaptör modülü, sunucu tarafı kutu, izin ön ekranı arayüzü (yalnız kanca), Huawei HMS (K17 ile kapsam dışı).
+- Firebase adaptörleri: Android derleniyor (AAR); iOS firebase-ios-sdk 11.15.0 ile derleniyor (`cd ios-firebase && swift build`, ilk koşuda ~150 MB Firebase indirir).
+- Flutter ve React Native köprüleri yazıldı, **derlenmedi** (bu makinede Flutter / React Native araç zinciri yok); Flutter kanal testi `flutter test` ile koşar.
+- 0.1'de yok: sunucu tarafı kutu, izin ön ekranı arayüzü (yalnız kanca), Huawei HMS (K17), çekirdek için CocoaPods spec'i (depo açılana kadar yalnız SPM).

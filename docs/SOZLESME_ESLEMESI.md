@@ -14,7 +14,16 @@
 | `isOnePushMessage` | var | var | var |
 | Ortam bildirimi | makbuz + DEBUG | debuggable + yükleyici | var (Android sınırı yazılı) |
 | Teslim (delivered) | NSE `OnePushNotificationService.process` | yalnız servis çağrılınca (data mesajı / ön plan) | var |
-| GA4 köprüsü `one_push_open` | `analyticsLogger` kancası | `analyticsLogger` kancası | Firebase adaptörü 0.2 |
+| GA4 köprüsü `one_push_open` | `analyticsLogger` kancası; `OnePushFirebase.connect()` bağlar | aynı; `OnePushFirebase.connect(context)` | var |
 | Sessiz push ile kaldırma tespiti | — | — | 0.2 (sunucu tarafı) |
 | Kayıt gövdesi (`POST register`) | bölüm 5 alanları | bölüm 5 alanları | var |
 | Olay gövdesi (`POST event`) | `{events: [...]}` parti | aynı | var |
+
+## Köprüler
+
+| Yüzey | Flutter (`onepush_flutter`) | React Native (`@adventure/onepush-react-native`) |
+|---|---|---|
+| Tüm çekirdek çağrıları | MethodChannel `com.adventure.onepush/flutter` | NativeModule `OnePushModule`, Promise |
+| `isOnePushMessage` | saf Dart (natife gitmez) | saf TS |
+| İzin | iOS sistem izni / Android 13 `POST_NOTIFICATIONS` | aynı; Android sonucu Activity'ye düşer |
+| Durum | yazıldı, derlenmedi (Flutter SDK yok) | yazıldı, derlenmedi (RN araç zinciri yok) |

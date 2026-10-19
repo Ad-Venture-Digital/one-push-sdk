@@ -1,0 +1,21 @@
+name: onepush_flutter
+description: Ad Venture One Push — Flutter bridge over the native One Push cores (iOS Swift, Android Kotlin). No Firebase dependency in the bridge.
+version: 0.1.0
+homepage: https://one.adventuredigital.com
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
+dependencies:
+  flutter:
+    sdk: flutter
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.adventure.onepush.flutter
+        pluginClass: OnePushFlutterPlugin
+      ios:
+        pluginClass: OnePushFlutterPlugin

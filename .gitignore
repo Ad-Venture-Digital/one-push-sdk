@@ -2,6 +2,8 @@
 ios/.build/
 ios/*.xcodeproj
 ios/.swiftpm/
+ios-firebase/.build/
+ios-firebase/.swiftpm/
 *.xcuserstate
 # Android
 android/.gradle/

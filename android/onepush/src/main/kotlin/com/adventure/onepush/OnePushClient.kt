@@ -113,9 +113,13 @@ class OnePushClient(
     fun markInboxRead(pushId: String) = inbox.markRead(pushId)
 
     // ---- gönderim
-    internal fun headers(): Map<String, String> = mapOf(
-        "X-One-App-Key" to config.appKey, "X-One-Bundle-Id" to bundleId, "X-One-SDK" to "android/$ONE_PUSH_SDK_VERSION",
-    )
+    /** Kayıt dışındaki her çağrıda cihaz token'ı başlıkta: sunucu olayı aboneliğe böyle bağlar. */
+    internal fun headers(): Map<String, String> {
+        val h = linkedMapOf("X-One-App-Key" to config.appKey, "X-One-Bundle-Id" to bundleId,
+            "X-One-SDK" to "android/$ONE_PUSH_SDK_VERSION")
+        synchronized(lock) { state.token }?.let { h["X-One-Device-Token"] = it }
+        return h
+    }
 
     internal fun registrationPayload(): RegistrationPayload? = synchronized(lock) {
         val t = state.token ?: return null

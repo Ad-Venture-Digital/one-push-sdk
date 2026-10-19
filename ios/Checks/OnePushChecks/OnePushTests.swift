@@ -121,6 +121,7 @@ final class OnePushTests: XCTestCase {
         let c = makeClient(); c.setPushToken("t")
         XCTAssertTrue(c.handle(["one_push_id": "p9", "one_baslik": "Kampanya", "one_metin": "Bugün"], opened: false))
         XCTAssertEqual(transport.paths().last, "POST event")
+        XCTAssertEqual(transport.calls.last!.headers["X-One-Device-Token"], "t")
         let events = transport.calls.last!.body["events"] as! [[String: Any]]
         XCTAssertEqual(events.count, 1)
         XCTAssertEqual(events[0]["type"] as? String, "delivered")

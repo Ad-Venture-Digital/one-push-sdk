@@ -113,6 +113,7 @@ class OnePushClientTest {
         val c = client(); c.setPushToken("t")
         assertTrue(c.handle(mapOf("one_push_id" to "p9", "one_baslik" to "Kampanya"), opened = false))
         assertEquals("POST event", transport.paths().last())
+        assertEquals("t", transport.calls.last().headers["X-One-Device-Token"])
         val e = transport.lastEvents()
         assertEquals(1, e.size); assertEquals("delivered", e[0].getString("type")); assertEquals("p9", e[0].getString("push_id"))
         assertEquals("test", e[0].getString("environment"))

@@ -135,8 +135,12 @@ public final class OnePushClient {
 
     // MARK: - gönderim
 
+    /// Kayıt dışındaki her çağrıda cihaz token'ı başlıkta gider: sunucu olayı
+    /// aboneliğe böyle bağlar (push_api `X-One-Device-Token`).
     func headers() -> [String: String] {
-        ["X-One-App-Key": config.appKey, "X-One-Bundle-Id": bundleId, "X-One-SDK": "ios/\(onePushSDKVersion)"]
+        var h = ["X-One-App-Key": config.appKey, "X-One-Bundle-Id": bundleId, "X-One-SDK": "ios/\(onePushSDKVersion)"]
+        if let t = lock.withLock({ state.token }) { h["X-One-Device-Token"] = t }
+        return h
     }
 
     func registrationPayload() -> RegistrationPayload? {

@@ -66,7 +66,7 @@ The SDK reports the build environment itself (`debug` / `test` / `production`): 
 ### Status (19 Oct 2026)
 
 - iOS core: builds and passes 14 checks on macOS (no Xcode on the build machine yet; device tests pending).
-- Android core: written, **not yet compiled** (no JDK/Gradle on the build machine); JUnit tests mirror the iOS ones.
+- Android core: compiles with AGP 8.5.2 / Kotlin 1.9.24 / Gradle 8.9 wrapper (JDK 17); 13 JUnit tests pass on the JVM (`./gradlew :onepush:testDebugUnitTest`). No device test yet.
 - Not in 0.1: Flutter / React Native bridges, Firebase adapter module (`OnePushFirebase`), server-side inbox, soft permission prompt UI (hook only), Huawei HMS (out of scope by decision K17).
 
 ---
@@ -95,5 +95,5 @@ SDK derleme ortamını kendisi bildirir (`debug` / `test` / `production`): iOS't
 ### Durum (19 Eki 2026)
 
 - iOS çekirdeği: macOS'ta derleniyor, 14 doğrulama yeşil (derleme makinesinde Xcode yok; cihaz testleri bekliyor).
-- Android çekirdeği: yazıldı, **henüz derlenmedi** (derleme makinesinde JDK/Gradle yok); JUnit testleri iOS'takilerin aynısı.
+- Android çekirdeği: AGP 8.5.2 / Kotlin 1.9.24 / Gradle 8.9 sarmalayıcı (JDK 17) ile derleniyor; 13 JUnit testi JVM'de yeşil (`./gradlew :onepush:testDebugUnitTest`). Cihaz testi henüz yok.
 - 0.1'de yok: Flutter / React Native köprüleri, Firebase adaptör modülü, sunucu tarafı kutu, izin ön ekranı arayüzü (yalnız kanca), Huawei HMS (K17 ile kapsam dışı).

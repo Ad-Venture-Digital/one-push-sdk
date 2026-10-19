@@ -168,14 +168,14 @@ class OnePushClient(
         if (!stateFile.exists()) return State()
         val o = JSONObject(stateFile.readText())
         State(
-            token = o.optString("token", null).takeIf { !o.isNull("token") },
-            appInstanceId = o.optString("app_instance_id", null).takeIf { !o.isNull("app_instance_id") },
-            userId = o.optString("user_id", null).takeIf { !o.isNull("user_id") },
+            token = o.nullStr("token"),
+            appInstanceId = o.nullStr("app_instance_id"),
+            userId = o.nullStr("user_id"),
             attributes = o.optJSONObject("attributes")?.let { a -> a.keys().asSequence().associateWithTo(LinkedHashMap()) { a.getString(it) } } ?: LinkedHashMap(),
             tags = o.optJSONArray("tags")?.let { a -> MutableList(a.length()) { a.getString(it) } } ?: ArrayList(),
             consent = o.optBoolean("consent", true),
             permission = o.optString("permission", "unknown"),
-            lastOpenedPushId = o.optString("last_opened_push_id", null).takeIf { !o.isNull("last_opened_push_id") },
+            lastOpenedPushId = o.nullStr("last_opened_push_id"),
             lastOpenedAtMs = if (o.isNull("last_opened_at")) null else o.getLong("last_opened_at"),
             registrationPending = o.optBoolean("registration_pending", false),
         )

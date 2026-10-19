@@ -9,7 +9,6 @@ android {
     defaultConfig { minSdk = 26 }   // K18: Android 8
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
     kotlinOptions { jvmTarget = "17" }
-    testOptions { unitTests.isReturnDefaultValues = true }
 }
 
 dependencies {

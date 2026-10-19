@@ -79,3 +79,6 @@ class EventQueue(directory: File) {
         tmp.writeText(arr.toString()); tmp.renameTo(file)
     }
 }
+
+/** `optString(key, null)` Kotlin'de `Nothing?` uyarısı verir; null/eksik alan için tek yardımcı. */
+internal fun JSONObject.nullStr(key: String): String? = if (has(key) && !isNull(key)) getString(key) else null

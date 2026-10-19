@@ -22,8 +22,8 @@ class InboxStore(directory: File) {
                 val arr = JSONArray(file.readText())
                 for (i in 0 until arr.length()) {
                     val o = arr.getJSONObject(i)
-                    items.add(InboxItem(o.getString("push_id"), o.optString("title", null), o.optString("body", null),
-                        o.optString("deep_link", null), o.getLong("received_at"), o.getBoolean("read")))
+                    items.add(InboxItem(o.getString("push_id"), o.nullStr("title"), o.nullStr("body"),
+                        o.nullStr("deep_link"), o.getLong("received_at"), o.getBoolean("read")))
                 }
             }
         }
